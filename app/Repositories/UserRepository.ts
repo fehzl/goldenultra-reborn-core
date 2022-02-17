@@ -8,6 +8,10 @@ export default class UserRepository {
     this.User = User
   }
 
+  public async getAll(): Promise<User[]> {
+    return this.User.all()
+  }
+
   public async getById(id: string): Promise<User | null> {
     return this.User.find(id)
   }
