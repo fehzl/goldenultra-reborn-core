@@ -12,6 +12,17 @@ export default class UserService {
     this.UserRepository = userRepository
   }
 
+  public async fetchUsers(): Promise<any> {
+    const users = await this.UserRepository.getAll()
+
+    return {
+      success: true,
+      httpCode: 200,
+      message: 'Users fetched successfully',
+      data: users,
+    }
+  }
+
   public async createUser(data: CreateUserValidator['schema']['props']): Promise<any> {
     const user = await this.UserRepository.create(data)
 
