@@ -38,6 +38,9 @@
     "source-map-support": "^0.5.21"
   },
   "lint-staged": {
-    "*.ts": ["eslint --cache --fix", "yarn format"]
+    "*.ts": [
+      "eslint --cache --fix",
+      "yarn format"
+    ]
   }
 }
