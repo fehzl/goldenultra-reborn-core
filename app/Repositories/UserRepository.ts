@@ -16,6 +16,10 @@ export default class UserRepository {
     return this.User.find(id)
   }
 
+  public async getByEmail(email: string): Promise<User | null> {
+    return this.User.findBy('email', email)
+  }
+
   public async create(data: CreateUserValidator['schema']['props']): Promise<User> {
     return this.User.create(data)
   }
