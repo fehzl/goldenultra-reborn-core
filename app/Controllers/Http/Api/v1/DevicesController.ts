@@ -15,7 +15,7 @@ export default class DevicesController extends BaseController {
   }
 
   public async index(ctx: HttpContextContract) {
-    const result = await this.deviceService.fetchDevices()
+    const result = await this.deviceService.fetchDevices(ctx.request.qs())
 
     if (!result.success && result.error) {
       throw new Exception(result.message, result.httpCode, result.error.code)

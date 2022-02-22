@@ -10,8 +10,8 @@ export default class DeviceService {
     this.DeviceRepository = deviceRepository
   }
 
-  public async fetchDevices(): Promise<any> {
-    const devices = await this.DeviceRepository.getAll()
+  public async fetchDevices(params?: any): Promise<any> {
+    const devices = await this.DeviceRepository.getAll(params)
 
     return {
       success: true,

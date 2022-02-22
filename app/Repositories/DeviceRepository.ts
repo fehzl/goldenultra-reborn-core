@@ -8,8 +8,28 @@ export default class DeviceRepository {
     this.Device = Device
   }
 
-  public async getAll(): Promise<Device[]> {
-    return this.Device.all()
+  public async getAll(params?: any): Promise<Device[]> {
+    const { search, availableToSell, page, limit }: any = params || {}
+
+    const query = this.Device.query()
+
+    if (search) {
+      query
+        .orWhere('exhibitionDescription', 'ilike', `%${search}%`)
+        .orWhere('detailedDescription', 'ilike', `%${search}%`)
+        .orWhere('alias', 'ilike', `%${search}%`)
+        .orWhere('code', 'ilike', `%${search}%`)
+    }
+
+    if (availableToSell) {
+      query.andWhere('availableToSell', availableToSell)
+    }
+
+    if (limit) {
+      return query.limit(limit)
+    }
+
+    return query
   }
 
   public async getById(id: string): Promise<Device | null> {
