@@ -20,7 +20,7 @@ export default class UsersController extends BaseController {
       throw new Exception(result.message, result.httpCode, result.error.code)
     }
 
-    return this.send(ctx, result.data, result.message, result.httpCode, result.meta)
+    return this.send(ctx, result.body, result.message, result.httpCode, result.meta)
   }
 
   public async create(ctx: HttpContextContract) {
@@ -28,10 +28,10 @@ export default class UsersController extends BaseController {
     const result = await this.userService.createUser(payload)
 
     if (!result.success && result.error) {
-      throw new Exception(result.message, result.error, result.httpCode)
+      throw new Exception(result.message, result.httpCode, result.error.code)
     }
 
-    return this.send(ctx, result.data, result.message, result.httpCode)
+    return this.send(ctx, result.body, result.message, result.httpCode)
   }
 }
 

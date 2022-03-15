@@ -22,7 +22,7 @@ export default class AuthController extends BaseController {
       throw new Exception(result.message, result.httpCode, result.error.code)
     }
 
-    return this.send(ctx, result.data, result.message, result.httpCode)
+    return this.send(ctx, result.body, result.message, result.httpCode)
   }
 
   public async logout(ctx: HttpContextContract) {
@@ -32,7 +32,7 @@ export default class AuthController extends BaseController {
       throw new Exception(result.message, result.httpCode, result.error.code)
     }
 
-    return this.send(ctx, result.data, result.message, result.httpCode)
+    return this.send(ctx, result.body, result.message, result.httpCode)
   }
 }
 

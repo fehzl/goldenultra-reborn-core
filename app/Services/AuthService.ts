@@ -2,6 +2,7 @@ import { inject, Ioc } from '@adonisjs/core/build/standalone'
 import UserRepository from 'App/Repositories/UserRepository'
 import Hash from '@ioc:Adonis/Core/Hash'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import IResponse from 'App/Datatypes/Interfaces/IResponse'
 
 @inject()
 export default class AuthService {
@@ -11,27 +12,19 @@ export default class AuthService {
     this.userRepository = userRepository
   }
 
-  public async login(email: string, password: string, ctx: HttpContextContract) {
+  public async login(
+    email: string,
+    password: string,
+    ctx: HttpContextContract
+  ): Promise<IResponse> {
     const user = await this.userRepository.getByEmail(email)
 
-    if (!user) {
+    if (!user || !(await Hash.verify(user.password, password))) {
       return {
         success: false,
         httpCode: 401,
         message: 'Invalid email or password',
-        data: {},
-        error: {
-          code: 'invalid_credentials',
-        },
-      }
-    }
-
-    if (!(await Hash.verify(user.password, password))) {
-      return {
-        success: false,
-        httpCode: 401,
-        message: 'Invalid email or password',
-        data: {},
+        body: {},
         error: {
           code: 'invalid_credentials',
         },
@@ -46,21 +39,21 @@ export default class AuthService {
       success: true,
       httpCode: 200,
       message: 'Login successful',
-      data: {
+      body: {
         user: user,
         jwt: accessToken.token,
       },
     }
   }
 
-  public async logout(ctx: HttpContextContract): Promise<any> {
+  public async logout(ctx: HttpContextContract): Promise<IResponse> {
     await ctx.auth.use(this.authGuard).revoke()
 
     return {
       success: true,
       httpCode: 200,
       message: 'Logout successful',
-      data: {},
+      body: {},
     }
   }
 }

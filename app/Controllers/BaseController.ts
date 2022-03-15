@@ -3,7 +3,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 export default class BaseController {
   public send(
     ctx: HttpContextContract,
-    data: any,
+    body: any,
     message: string,
     httpCode: number = 200,
     meta?: any
@@ -11,7 +11,7 @@ export default class BaseController {
     const response = {
       httpCode,
       message,
-      data,
+      body,
       meta,
     }
 
