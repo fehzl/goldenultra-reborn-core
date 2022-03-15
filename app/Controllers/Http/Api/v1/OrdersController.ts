@@ -18,10 +18,20 @@ export default class OrdersController extends BaseController {
     const result = await this.orderService.fetchOrders()
 
     if (!result.success && result.error) {
-      throw new Exception(result.error, result.httpCode)
+      throw new Exception(result.message, result.httpCode, result.error.code)
     }
 
-    return this.send(ctx, result.data, result.message, result.httpCode)
+    return this.send(ctx, result.body, result.message, result.httpCode)
+  }
+
+  public async show(ctx: HttpContextContract) {
+    const result = await this.orderService.fetchOrder(ctx.params.code)
+
+    if (!result.success && result.error) {
+      throw new Exception(result.message, result.httpCode, result.error.code)
+    }
+
+    return this.send(ctx, result.body, result.message, result.httpCode)
   }
 
   public async create(ctx: HttpContextContract) {
@@ -29,10 +39,22 @@ export default class OrdersController extends BaseController {
     const result = await this.orderService.create(payload)
 
     if (!result.success && result.error) {
-      throw new Exception(result.message, result.error, result.httpCode)
+      throw new Exception(result.message, result.httpCode, result.error.code)
     }
 
-    return this.send(ctx, result.data, result.message, result.httpCode)
+    return this.send(ctx, result.body, result.message, result.httpCode)
+  }
+
+  public async updateStatus(ctx: HttpContextContract) {
+    const result = await this.orderService.updateOrderStatus(ctx.params.code, ctx.params.status)
+
+    console.log(ctx.params)
+
+    if (!result.success && result.error) {
+      throw new Exception(result.message, result.httpCode, result.error.code)
+    }
+
+    return this.send(ctx, result.body, result.message, result.httpCode)
   }
 }
 

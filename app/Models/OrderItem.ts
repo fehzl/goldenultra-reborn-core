@@ -1,28 +1,34 @@
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
-import Order from './Order'
+import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import Device from './Device'
 
 export default class OrderItem extends BaseModel {
   @column({ isPrimary: true })
   public id: string
 
-  @column()
+  @column({ serializeAs: null })
   public orderId: string
 
-  @belongsTo(() => Order, { foreignKey: 'orderId' })
-  public order: BelongsTo<typeof Order>
-
-  @column()
+  @column({ serializeAs: null })
   public deviceId: string
 
-  @hasOne(() => OrderItem, { foreignKey: 'orderId' })
-  public orderItems: HasOne<typeof OrderItem>
-
-  @column()
-  public quantity: number
+  @hasOne(() => Device, { localKey: 'deviceId', foreignKey: 'id' })
+  public device: HasOne<typeof Device>
 
   @column()
   public price: number
+
+  @column()
+  public amount: number
+
+  @column()
+  public discount: number
+
+  @column()
+  public overall: number
+
+  @column()
+  public amountSeparated: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
