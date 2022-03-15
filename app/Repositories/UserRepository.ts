@@ -23,4 +23,14 @@ export default class UserRepository {
   public async create(data: CreateUserValidator['schema']['props']): Promise<User> {
     return this.User.create(data)
   }
+
+  public async delete(id: string): Promise<void> {
+    const user = await this.User.find(id)
+
+    if (!user) {
+      throw new Error('User not found')
+    }
+
+    await user.delete()
+  }
 }
