@@ -65,25 +65,29 @@ export default class Order extends BaseModel {
     foreignKey: 'orderId',
     onQuery: (query) =>
       query
-        .select('id', 'deviceId', 'price', 'amount', 'discount', 'overall', 'amountSeparated')
+        .select(
+          'id',
+          'deviceId',
+          'price',
+          'amount',
+          'discount',
+          'overall',
+          'separated',
+          'separatedByEmployeeId',
+          'amountSeparated',
+          'separatedAt'
+        )
         .preload('device', (deviceQuery) =>
           deviceQuery.select('id', 'alias', 'code', 'exhibition_description', 'un_price')
-        ),
+        )
+        .preload('separated_by', (separatedByQuery) => separatedByQuery.select('id', 'name')),
   })
   public items: HasMany<typeof OrderItem>
 
   @hasMany(() => OrderPayment, {
     foreignKey: 'orderId',
     onQuery: (query) =>
-      query.select(
-        'id',
-        'method',
-        'amount',
-        'identifier',
-        'situation',
-        'observation',
-        'created_at'
-      ),
+      query.select('id', 'method', 'value', 'identifier', 'situation', 'created_at'),
   })
   public payments: HasMany<typeof OrderPayment>
 
