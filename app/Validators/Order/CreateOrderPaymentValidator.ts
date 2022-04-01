@@ -8,9 +8,8 @@ export default class CreateOrderPaymentValidator {
     orderId: schema.string({}, [rules.exists({ table: 'orders', column: 'id' })]),
     method: schema.string({}, []),
     situation: schema.string({}, []),
-    amount: schema.number(),
+    value: schema.number(),
     identifier: schema.string(),
-    observation: schema.string(),
   })
 
   public messages = {}
