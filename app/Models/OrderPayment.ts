@@ -15,13 +15,10 @@ export default class OrderPayment extends BaseModel {
   public situation: string
 
   @column()
-  public amount: number
+  public value: number
 
   @column()
-  public identifier: string | null
-
-  @column()
-  public observation: string | null
+  public identifier: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
