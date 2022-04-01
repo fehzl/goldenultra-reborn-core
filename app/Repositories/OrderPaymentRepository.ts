@@ -38,4 +38,16 @@ export default class OrderPaymentRepository {
 
     return orderPayment
   }
+
+  public async delete(id: number): Promise<OrderPayment> {
+    const orderPayment = await this.OrderPayment.find(id)
+
+    if (!orderPayment) {
+      throw new Error('OrderPayment not found')
+    }
+
+    await orderPayment.delete()
+
+    return orderPayment
+  }
 }
