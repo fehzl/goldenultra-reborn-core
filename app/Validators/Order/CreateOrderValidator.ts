@@ -10,9 +10,9 @@ export default class CreateOrderValidator {
     items: schema.array().members(
       schema.object().members({
         deviceId: schema.string({}, [rules.exists({ table: 'devices', column: 'id' })]),
-        devicePrice: schema.number(),
-        quantity: schema.number([rules.range(1, 999)]),
         price: schema.number(),
+        amount: schema.number([rules.range(1, 999)]),
+        overall: schema.number(),
       })
     ),
   })
