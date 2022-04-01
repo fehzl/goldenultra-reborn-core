@@ -1,6 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import Device from './Device'
+import User from './User'
+import Employee from './Employee'
 
 export default class OrderItem extends BaseModel {
   @column({ isPrimary: true })
@@ -28,7 +30,22 @@ export default class OrderItem extends BaseModel {
   public overall: number
 
   @column()
+  public separated: boolean
+
+  @column()
   public amountSeparated: number
+
+  @column()
+  public separatedByEmployeeId: string
+
+  @belongsTo(() => Employee, {
+    localKey: 'id',
+    foreignKey: 'separatedByEmployeeId',
+  })
+  public separated_by: BelongsTo<typeof Employee>
+
+  @column.dateTime({ autoCreate: false })
+  public separatedAt: DateTime
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
