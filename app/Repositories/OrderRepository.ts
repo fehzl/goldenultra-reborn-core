@@ -55,9 +55,9 @@ export default class OrderRepository {
       await this.OrderItem.create({
         orderId: order.id,
         deviceId: items.deviceId,
-        devicePrice: items.devicePrice,
-        quantity: items.quantity,
         price: items.price,
+        amount: items.amount,
+        overall: items.overall,
       })
     }
 
