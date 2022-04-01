@@ -14,6 +14,8 @@ Route.group(() => {
   Route.post('/orders', 'Api/v1/OrdersController.create')
   Route.get('/orders/:code', 'Api/v1/OrdersController.show')
   Route.post('/orders/payments', 'Api/v1/OrdersPaymentsController.create')
+  Route.delete('/orders/payments/:id', 'Api/v1/OrdersPaymentsController.delete')
+  Route.patch('/orders/separations', 'Api/v1/OrdersSeparationsController.update').middleware('auth')
   Route.post('/orders/charges', 'Api/v1/OrdersChargesController.create')
   Route.delete('/orders/charges/:id', 'Api/v1/OrdersChargesController.delete')
   Route.get('/clients', 'Api/v1/ClientsController.index')
