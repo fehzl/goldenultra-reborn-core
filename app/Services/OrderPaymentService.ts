@@ -21,6 +21,17 @@ export default class OrderPaymentService {
       body: orderPayment,
     }
   }
+
+  public async delete(id: number): Promise<IResponse> {
+    const orderPayment = await this.orderPaymentRepository.delete(id)
+
+    return {
+      success: true,
+      httpCode: 200,
+      message: 'Order deleted successfully',
+      body: orderPayment,
+    }
+  }
 }
 
 new Ioc().make(OrderPaymentService)
